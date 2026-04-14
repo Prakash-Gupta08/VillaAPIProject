@@ -1,0 +1,6 @@
+@VillaWebAPI_HostAddress = http://localhost:5052
+
+GET {{VillaWebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
