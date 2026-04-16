@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RoyalVilla.DTO;
 using VillaWebAPI.Controllers;
 using VillaWebAPI.Data;
 using VillaWebAPI.DTO;
@@ -28,6 +29,11 @@ builder.Services.AddAutoMapper(o =>
     o.CreateMap<Villa, VillaDto>().ReverseMap();
     o.CreateMap<VillaUpdateDto, VillaDto>().ReverseMap();
     o.CreateMap<User, UserDto>().ReverseMap();
+    o.CreateMap<VillaAmenities, VillaCreateDto>().ReverseMap();
+    o.CreateMap<VillaAmenities, VillaUpdateDto>().ReverseMap();
+    o.CreateMap<VillaAmenities, VillaAmenitiesDTO>()
+    .ForMember(dest => dest.VillaName, opt => opt.MapFrom(src =>src.Villa!=null? src.Villa.Name : null));
+    o.CreateMap<VillaAmenitiesDTO, VillaAmenities>();
 
 });
 builder.Services.AddScoped<IAuthService, AuthService>();

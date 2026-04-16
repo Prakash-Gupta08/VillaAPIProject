@@ -26,11 +26,11 @@ namespace VillaWebAPI.DTO
         public static ApiResponse<TData> Ok(TData data, string message) =>
             Create(true,200, message, data);
         public static ApiResponse<TData> CreatedAt(TData data, string message) =>
-            Create(false, 201, message, data);
+            Create(true, 201, message, data);
         public static ApiResponse<TData> NoContent(string message = "Operation completed successfully") =>
             Create(true, 204, message);
-        public static ApiResponse<TData> BadRequest(string message) =>
-            Create(false, 400, message);
+        //public static ApiResponse<TData> BadRequest(string message) =>
+        //    Create(false, 400, message);
         public static ApiResponse<TData> NotFound(string message = "Resource not found") =>
             Create(false, 404, message);
         public static ApiResponse<TData> BadRequest(string message, object? errors = null) =>
