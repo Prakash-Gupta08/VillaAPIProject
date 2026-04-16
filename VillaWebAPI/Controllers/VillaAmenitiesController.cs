@@ -15,7 +15,7 @@ namespace VillaWebAPI.Controllers
     public class VillaAmenitiesController : ControllerBase
     {
         private readonly MyDBContext _context;
-        private readonly IMapper _mapper; // before
+        private readonly IMapper _mapper; 
         public VillaAmenitiesController(MyDBContext context, IMapper mapper)
         {
             _context = context;
@@ -33,6 +33,8 @@ namespace VillaWebAPI.Controllers
             var response = ApiResponse<IEnumerable<VillaAmenitiesDTO>>.Ok(dtoResponseVilla, "VillaAmenities retrieve successfully");
             return Ok(response);
         }
+
+
         [HttpGet("{id:int}")]
         [ProducesResponseType(typeof(ApiResponse<VillaAmenitiesDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
@@ -59,17 +61,7 @@ namespace VillaWebAPI.Controllers
                 {
                     return NotFound(ApiResponse<object>.NotFound($"VillaAmenities with ID {id} was not found"));
                 }
-                //var result = _mapper.Map<VillaAmenitiesDTO>(villaAmenities);
                 return Ok(ApiResponse<object>.Ok(_mapper.Map<VillaAmenitiesDTO>(villaAmenities), "Data found successfully"));
-                //return new ApiResponse<VillaAmenitiesDTO>()
-                //{
-                //    StatusCode = 200,
-                //    Errors = "Valid ID must be greater than 0",
-                //    Success = true,
-                //    Message = "Data found successfully",
-                //    Data = _mapper.Map<VillaAmenitiesDTO>(villa)
-                //};
-
 
             }
             catch (Exception ex)
@@ -119,93 +111,93 @@ namespace VillaWebAPI.Controllers
         //}
 
 
-        //[HttpPost("Create")]
-        //[ProducesResponseType(typeof(ApiResponse<VillaAmenitiesDTO>), StatusCodes.Status201Created)]
-        //[ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
-        //[ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
-        //[ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
-        //public async Task<IActionResult> CreateVillaAmenities(VillaAmenitiesCreateDTO villaAmentiesDTO)
-        //{
-        //    try
-        //    {
-        //        if (villaAmentiesDTO == null)
-        //        {
-        //            return BadRequest(ApiResponse<object>.BadRequest("VillaAmenities data is required"));
+        [HttpPost("Create")]
+        [ProducesResponseType(typeof(ApiResponse<VillaAmenitiesDTO>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateVillaAmenities(VillaAmenitiesCreateDTO villaAmentiesDTO)
+        {
+            try
+            {
+                if (villaAmentiesDTO == null)
+                {
+                    return BadRequest(ApiResponse<object>.BadRequest("VillaAmenities data is required"));
 
-        //        }
-        //        var duplicateVilla = await _context.VillaAmenities.FirstOrDefaultAsync(s => s.Id == villaAmentiesDTO.VillaId);
-        //        if (duplicateVilla != null)
-        //        {
-        //            return Conflict(ApiResponse<object>.Conflict($"A villa with the ID '{villaAmentiesDTO.VillaId}' does not exist"));
-        //        }
-        //        VillaAmenities villaAmenities = _mapper.Map<VillaAmenities>(villaAmentiesDTO);
-        //        villaAmenities.CreatedDate = DateTime.Now;
+                }
+                var duplicateVilla = await _context.VillaAmenities.FirstOrDefaultAsync(s => s.Id == villaAmentiesDTO.VillaId);
+                if (duplicateVilla != null)
+                {
+                    return Conflict(ApiResponse<object>.Conflict($"A villa with the ID '{villaAmentiesDTO.VillaId}' does not exist"));
+                }
+                VillaAmenities villaAmenities = _mapper.Map<VillaAmenities>(villaAmentiesDTO);
+                villaAmenities.CreatedDate = DateTime.Now;
                 
-        //        await _context.VillaAmenities.AddAsync(villaAmenities);
-        //        await _context.SaveChangesAsync();
-        //        var res = ApiResponse<VillaAmenitiesDTO>.CreatedAt(_mapper.Map<VillaAmenitiesDTO>(villaAmenities), "VillaAmenities created successfully");
-        //        return CreatedAtAction(nameof(CreateVillaAmenities), new { id = villaAmenities.Id }, res);
+                await _context.VillaAmenities.AddAsync(villaAmenities);
+                await _context.SaveChangesAsync();
+                var res = ApiResponse<VillaAmenitiesDTO>.CreatedAt(_mapper.Map<VillaAmenitiesDTO>(villaAmenities), "VillaAmenities created successfully");
+                return CreatedAtAction(nameof(CreateVillaAmenities), new { id = villaAmenities.Id }, res);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var res = ApiResponse<object>.Error(500, "An error occured while creating villa with ID : ", ex.Message);
-        //        return StatusCode(500, res);
+            }
+            catch (Exception ex)
+            {
+                var res = ApiResponse<object>.Error(500, "An error occured while creating villa with ID : ", ex.Message);
+                return StatusCode(500, res);
 
-        //    }
-        //}
+            }
+        }
 
-        //[HttpPut("{id:int}")]
-        //[ProducesResponseType(typeof(ApiResponse<VillaAmenitiesDTO>), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
-        //[ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
-        //[ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
-        //public async Task<ActionResult<ApiResponse<VillaAmenitiesDTO>>> UpdateVilla(int id, VillaAmenitiesUpdateDTO villaAmenitiesDTO)
-        //{
-        //    try
-        //    {
-        //        if (villaAmenitiesDTO == null)
-        //        {
-        //            //return BadRequest("VillaAmenities must required");
-        //            return BadRequest(ApiResponse<object>.BadRequest("Villa Amenities data is required"));
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(typeof(ApiResponse<VillaAmenitiesDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateVilla(int id, VillaAmenitiesUpdateDTO villaAmenitiesDTO)
+        {
+            try
+            {
+                if (villaAmenitiesDTO == null)
+                {
+                   
+                    return BadRequest(ApiResponse<object>.BadRequest("Villa Amenities data is required"));
 
-        //        }
-        //        if (id != villaAmenitiesDTO.VillaId)
-        //        {
-        //            return BadRequest(ApiResponse<object>.BadRequest("VillaAmenities ID in URL does not match VillaAmenities ID in request body"));
-        //            //return BadRequest("VillaAmenities ID in URL does not match villa ID in request body");
-        //        }
+                }
+                if (id != villaAmenitiesDTO.Id)
+                {
+                    return BadRequest(ApiResponse<object>.BadRequest("VillaAmenities ID in URL does not match VillaAmenities ID in request body"));
+                  
+                }
 
-        //        var existingvilla = await _context.Villa.FirstOrDefaultAsync(u => u.Id == villaAmenitiesDTO.VillaId);
-        //        if (existingvilla != null)
-        //        {
-        //            return Conflict(ApiResponse<object>.Conflict($"Villa Amenities with ID {villaAmenitiesDTO.VillaId} does not exist"));
-        //        }
+                var existingvilla = await _context.Villa.FirstOrDefaultAsync(u => u.Id == villaAmenitiesDTO.VillaId);
+                if (existingvilla == null)
+                {
+                    return Conflict(ApiResponse<object>.Conflict($"Villa Amenities with ID {villaAmenitiesDTO.VillaId} does not exist"));
+                }
 
-        //        var existingVillaAmenities = await _context.VillaAmenities.FirstOrDefaultAsync(s => s.Id == id);
-        //        if (existingVillaAmenities == null)
-        //        {
-        //            return NotFound(ApiResponse<object>.NotFound($"Villa Amenities with ID {id} was not found"));
-        //        }
-        //        _mapper.Map(villaAmenitiesDTO, existingVillaAmenities);
-        //        existingVillaAmenities.UpdatedDate = DateTime.Now;
+                var existingVillaAmenities = await _context.VillaAmenities.FirstOrDefaultAsync(s => s.Id == id);
+                if (existingVillaAmenities == null)
+                {
+                    return NotFound(ApiResponse<object>.NotFound($"Villa Amenities with ID {id} was not found"));
+                }
+                _mapper.Map(villaAmenitiesDTO, existingVillaAmenities);
+                existingVillaAmenities.UpdatedDate = DateTime.Now;
 
-        //        await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-        //        var res = ApiResponse<VillaAmenitiesDTO>.Ok(_mapper.Map<VillaAmenitiesDTO>(villaAmenitiesDTO), "VillaAmenities updates successfully");
-        //        return Ok(villaAmenitiesDTO);
+                var res = ApiResponse<VillaAmenitiesDTO>.Ok(_mapper.Map<VillaAmenitiesDTO>(villaAmenitiesDTO), "VillaAmenities updates successfully");
+                return Ok(villaAmenitiesDTO);
 
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var res = ApiResponse<object>.Error(500, "An error occured while creating villa amenities : ", ex.Message);
-        //        return StatusCode(500, res);
+            }
+            catch (Exception ex)
+            {
+                var res = ApiResponse<object>.Error(500, "An error occured while creating villa amenities : ", ex.Message);
+                return StatusCode(500, res);
 
-        //    }
-        //}
+            }
+        }
 
 
     }

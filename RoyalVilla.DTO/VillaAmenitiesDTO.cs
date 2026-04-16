@@ -6,9 +6,9 @@ using System.Text;
 
 namespace RoyalVilla.DTO
 {
-    internal class VillaAmenitiesDTO
+    public class VillaAmenitiesDTO
     {
-        //[Key]
+        [Key]
         public int Id { get; set; }
         [Required]
         [MaxLength(100)]

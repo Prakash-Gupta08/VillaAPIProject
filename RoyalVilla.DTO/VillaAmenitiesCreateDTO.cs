@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Text;
 
 namespace RoyalVilla.DTO
 {
-    internal class VillaAmenitiesCreateDTO
+    public class VillaAmenitiesCreateDTO
     {
         
         [Required]
@@ -14,7 +14,7 @@ namespace RoyalVilla.DTO
         public required string Name { get; set; }
         public string? Description { get; set; }
 
-       
+        [Required]
         public int VillaId { get; set; }
         
     }
