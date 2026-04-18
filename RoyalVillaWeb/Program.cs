@@ -1,7 +1,27 @@
+using RoyalVilla.DTO;
+using RoyalVillaWeb.Services;
+using RoyalVillaWeb.Services.IServices;
+using VillaWebAPI.DTO;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAutoMapper(o =>
+{
+    o.CreateMap<VillaDto, VillaCreateDto>().ReverseMap();
+    o.CreateMap<VillaUpdateDto, VillaDto>().ReverseMap();
+    
+
+});
+
+builder.Services.AddHttpClient("RoyalVillaAPI", client =>
+{
+    var villaAPIUrl = builder.Configuration.GetValue<string>("ServiceUrls:VillaAPI");
+    client.BaseAddress = new Uri(villaAPIUrl);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+builder.Services.AddScoped<IVillaService, VillaService>();
 
 var app = builder.Build();
 
@@ -12,6 +32,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 app.UseRouting();
