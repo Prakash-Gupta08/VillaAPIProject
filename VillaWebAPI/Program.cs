@@ -24,8 +24,8 @@ builder.Services.AddDbContext<MyDBContext>(options =>
 
 builder.Services.AddAutoMapper(o =>
 {
-    o.CreateMap<Villa, VillaCreateDto>().ReverseMap();
-    o.CreateMap<Villa, VillaUpdateDto>().ReverseMap(); // Reverse map is used for the automapping with the data or model classes
+    o.CreateMap<Villa, VillaCreateDto>().ReverseMap(); // Reverse map is used for the automapping with the data or model classes
+    o.CreateMap<Villa, VillaUpdateDto>().ReverseMap(); 
     o.CreateMap<Villa, VillaDto>().ReverseMap();
     o.CreateMap<VillaUpdateDto, VillaDto>().ReverseMap();
     o.CreateMap<User, UserDto>().ReverseMap();
