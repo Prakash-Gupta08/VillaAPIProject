@@ -101,14 +101,14 @@
     {
         <!--Villa Cards Grid-->
         <div class="row row-cols-1 row-cols-2 row-cols-lg-3 g-4">
-            @foreach (var villa in Model)
-            {
+            @* @foreach (var villa in Model)
+            { *@
                 <!--card0-->
                 <div class="col">
                     <div class="card h-100 shadow-sm hover-shadow transition">
                         <!--Villa images-->
                         <div class="position-relative overflow-hidden">
-                            <img src="villa.ImageUrl" class="card-img-top villa-image" style="height: 250px; object-fit: cover;" />
+                        <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg" class="card-img-top villa-image" style="height: 250px; object-fit: cover;" />
                             <div class="card-img-top bg-gradient-primary d-flex align-items-center justify-content-center" style="height: 250px;">
                                 <i class="bi bi-image text-white" style="font-size:4rem;"></i>
                             </div>
@@ -563,7 +563,7 @@
                         </div>
                     </div>
                 </div>
-            }
+            @* } *@
 
         </div>
     }
