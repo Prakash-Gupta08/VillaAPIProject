@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services
 builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -35,8 +36,11 @@ builder.Services.AddAutoMapper(o =>
     .ForMember(dest => dest.VillaName, opt => opt.MapFrom(src =>src.Villa!=null? src.Villa.Name : null));
     o.CreateMap<VillaAmenitiesDTO, VillaAmenities>();
 
+
 });
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ChatService>();
+
 var app = builder.Build();
 
 //migration
@@ -64,3 +68,6 @@ static async Task SeedDataAsync(WebApplication app)
     var context = scope.ServiceProvider.GetRequiredService<MyDBContext>();
     await context.Database.MigrateAsync();
 }
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
