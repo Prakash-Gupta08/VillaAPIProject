@@ -733,3 +733,197 @@
     }
 </style>
 
+
+
+
+@{
+    ViewData["Title"] = "Chat";
+}
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Floating Button */
+        #chatToggleBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #075E54;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 9999;
+        }
+
+        /* Chat Container */
+        #chatContainer {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 320px;
+            height: 420px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 9999;
+        }
+
+        /* Header */
+        #chatHeader {
+            background: #075E54;
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Messages */
+        #chatBox {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background: #ece5dd;
+        }
+
+        .message {
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 75%;
+            word-wrap: break-word;
+            font-size: 14px;
+        }
+
+        .user {
+            background: #dcf8c6;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .bot {
+            background: white;
+            margin-right: auto;
+        }
+
+        /* Input Area */
+        #chatInputArea {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        #messageInput {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        #sendBtn {
+            background: #075E54;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+            #sendBtn:hover {
+                background: #0b806f;
+            }
+    </style>
+
+    <!-- Floating Button -->
+    <button id="chatToggleBtn">💬</button>
+
+    <!-- Chat UI -->
+    <div id="chatContainer">
+        <div id="chatHeader">Villa Assistant 🤖</div>
+
+        <div id="chatBox"></div>
+
+        <div id="chatInputArea">
+            <input id="messageInput" placeholder="Type a message..." />
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const toggleBtn = document.getElementById("chatToggleBtn");
+        const chatContainer = document.getElementById("chatContainer");
+        const sendBtn = document.getElementById("sendBtn");
+        const input = document.getElementById("messageInput");
+        const chatBox = document.getElementById("chatBox");
+
+        // Toggle Chat
+        toggleBtn.addEventListener("click", () => {
+            chatContainer.style.display =
+                chatContainer.style.display === "flex" ? "none" : "flex";
+        });
+
+        // Send on click
+        sendBtn.addEventListener("click", sendMessage);
+
+        // Send on Enter
+        input.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") sendMessage();
+        });
+
+        async function sendMessage() {
+            const message = input.value.trim();
+            if (!message) return;
+
+            appendMessage(message, "user");
+            input.value = "";
+
+            try {
+                const response = await fetch("/api/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                if (!response.ok) throw new Error();
+
+                const data = await response.json();
+
+                appendMessage(data.reply || "No response", "bot");
+
+            } catch (err) {
+                appendMessage("Server error ❌", "bot");
+            }
+        }
+
+        function appendMessage(text, type) {
+            const msg = document.createElement("div");
+            msg.className = `message ${type}`;
+            msg.innerText = text;
+
+            chatBox.appendChild(msg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+                function showTyping() {
+            const typing = document.createElement("div");
+            typing.className = "message bot";
+            typing.id = "typing";
+            typing.innerText = "Typing...";
+            chatBox.appendChild(typing);
+        }
+
+        function removeTyping() {
+            const typing = document.getElementById("typing");
+            if (typing) typing.remove();
+        }
+    </script>
