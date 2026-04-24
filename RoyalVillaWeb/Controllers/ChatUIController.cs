@@ -43,7 +43,7 @@ namespace RoyalVillaWeb.Controllers
                     .ToList();
 
                 if (!result.Any())
-                    return Ok(new { reply = $"No villas found under ₹{price}" });
+                    return Ok(new { reply = $"No villas found under : ₹{price}" });
 
                 string reply = "Villas under ₹" + price + ":\n" +
                                string.Join("\n", result.Select(v => $"{v.Name} - ₹{v.Price}"));
@@ -52,7 +52,7 @@ namespace RoyalVillaWeb.Controllers
             }
 
             // Default
-            return Ok(new { reply = "Try asking: 'villas under 5000'" });
+            return Ok(new { reply = "Try asking more: 'villas under 5000'" });
         }
     }
 
