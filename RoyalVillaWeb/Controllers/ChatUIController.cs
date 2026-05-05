@@ -10,10 +10,10 @@ namespace RoyalVillaWeb.Controllers
         // TEMP: Dummy data (replace with DB later)
         private static List<Villa> villas = new List<Villa>
         {
-            new Villa { Id = 1, Name = "Luxury Villa", Price = 4000 },
-            new Villa { Id = 2, Name = "Beach Villa", Price = 6000 },
-            new Villa { Id = 3, Name = "Budget Villa", Price = 2500 },
-            new Villa { Id = 4, Name = "Premium Villa", Price = 8000 }
+            new Villa { Id = 1, Name = "Luxury Villa", Price = 5000 },
+            new Villa { Id = 2, Name = "Beach Villa", Price = 7000 },
+            new Villa { Id = 3, Name = "Budget Villa", Price = 3500 },
+            new Villa { Id = 4, Name = "Premium Villa", Price = 9000 }
         };
 
         [HttpPost]
