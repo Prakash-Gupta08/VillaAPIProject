@@ -7,7 +7,7 @@ namespace RoyalVillaWeb.Services
     public class VillaService : BaseService, IVillaService
     {
         
-        private readonly string _villaUrl;
+        public readonly string _villaUrl;
         private const string APIEndpoint = "/api/villa";
         public VillaService(IHttpClientFactory httpClient, IConfiguration configuration) : base(httpClient)
         {

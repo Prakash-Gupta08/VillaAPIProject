@@ -15,7 +15,7 @@ namespace RoyalVillaWeb.Controllers
         public HomeController(IVillaService villaService, IMapper mapper)
         {
             _villaService = villaService;
-            _mapper = mapper;
+            _mapper = mapper;  
             
         }
         public async Task<IActionResult> Index()
@@ -24,17 +24,20 @@ namespace RoyalVillaWeb.Controllers
             try
             {
                 var res = await _villaService.GetAllAsync<ApiResponse<List<VillaDto>>>("");
-                if (res != null && res.Success && res.Data != null)
+                if (res != null && res.Data != null)
                 {
                     villaList = res.Data;
                 }
+                
             }
+
             catch (Exception ex)
             {
                 TempData["error"] = $"An error occured: {ex.Message}";
             }
             return View(villaList);
         }
+
 
         public IActionResult Privacy()
         {
