@@ -60,7 +60,6 @@
 </div>
 
 <div class="container mt-4" id="villa-listing">
-
     <!--Header Section-->
     <div class="row mb-4">
         <div class="col-12">
@@ -77,13 +76,14 @@
             </div>
         </div>
     </div>
-    @if(TempData["error"] != null)
+    @if (TempData["error"] != null)
     {
-        <div class="alert alert-danger alert-dismissible fade show" role = "alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="bi bi-exclamation-triangle-fill"></i> @TempData["error"]
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
+    
     @if (Model == null || Model.Any())
     {
         <div class="row">
@@ -96,35 +96,40 @@
             </div>
         </div>
     }
+
     else
     {
+        <!--Villa Cards Grid-->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
-            @foreach (var villa in Model)
+            @foreach(var villa in Model)
             {
-                <div class="col">
+            <div class="col">
                     <div class="card h-100 shadow-sm hover-shadow transition">
-
                         <!-- Villa Image -->
                         <div class="position-relative overflow-hidden">
+                            <img src="#" class="card-img-top villa-image" style="height:250px; object-fit:cover;" />
+                            <div class="card-img-top bg-gradient-primary d-flex align-items-center justify-content-center"
+                            style="height: 250px;">
+                                <i class="bi bi-image text-white" style="font-size:4rem;"></i>
+                            </div>
 
-                            @if (!string.IsNullOrEmpty(villa.ImageUrl))
-                            {
-                                <img src="villa.ImageUrl" class="card-img-top villa-image"
-                                     style="height: 250px; object-fit: cover;" />
-                            }
-                            else
-                            {
-                                <div class="card-img-top bg-gradient-primary d-flex align-items-center justify-content-center"
-                                     style="height: 250px;">
-                                    <i class="bi bi-image text-white" style="font-size:4rem;"></i>
-                                </div>
-                            }
+                            @* @if (!string.IsNullOrEmpty(villa.ImageUrl))
+                     {
+                         <img src="villa.ImageUrl" class="card-img-top villa-image"
+                              style="height: 250px; object-fit: cover;" />
+                     }
+                     else
+                     {
+                         <div class="card-img-top bg-gradient-primary d-flex align-items-center justify-content-center"
+                              style="height: 250px;">
+                             <i class="bi bi-image text-white" style="font-size:4rem;"></i>
+                         </div>
+                     } *@
 
-                            <!-- Price -->
+                            <!-- Price Badge -->
                             <div class="position-absolute top-0 end-0 m-3">
                                 <span class="badge bg-success fs-5 px-3 py-2 rounded-pill shadow">
-                                    ₹@villa.Rate / night
+                                    ₹/Night
                                 </span>
                             </div>
 
@@ -134,11 +139,11 @@
                         <div class="card-body d-flex flex-column">
 
                             <h5 class="card-title text-primary fw-bold mb-3">
-                                @villa.Name
+                                Name
                             </h5>
 
                             <p class="card-text text-muted flex-grow-1">
-                                @villa.Details
+                                Details
                             </p>
 
                             <!-- Villa Details -->
@@ -148,35 +153,82 @@
                                         <div class="d-flex align-items-center">
                                             <i class="bi bi-people-fill text-primary me-2"></i>
                                             <small class="text-muted">
-                                                @villa.Occupancy 
+                                                XX Gueast
                                             </small>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="d-flex align-items-center">
+                                        <div class="d -flex align-items-center">
                                             <i class="bi bi-square-fill text-primary me-2"></i>
                                             <small class="text-muted">
-                                                @villa.Sqft sqft
+                                                XX sqft
                                             </small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Button -->
+                            <!-- Action Button -->
                             <div class="d-grid gap-2">
                                 <a href="#" class="btn btn-primary btn-hover">
                                     <i class="bi bi-envelope"></i> Contact Us
                                 </a>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
             }
-
         </div>
+        
     }
+
+    <!--Statistics section-->
+    <div class="row mt-5 mb-5">
+        <div class="col-12">
+            <div class="card shadow-lg border-0 stats-card">
+                <div class="card-body p-4">
+                    <h3 class="text-center mb-4 fw-bold">At a Glance</h3>
+                    <div class="row text-center g-4">
+                        <div class="col-md-3">
+                            <div class="stat-item">
+                                <i class="bi bi-house text-primary fs-1 mb-3"></i>
+                                <h3 class="text-primary fw-bold mb-1">XX</h3>
+                                <p class="text-muted mb-0">Total Villas</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-item">
+                                <i class="bi bi-cash-coin text-success fs-1 mb-3"></i>
+                                <h3 class="text-success fw-bold mb-1">$$$</h3>
+                                <p class="text-muted mb-0">Starting From</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-item">
+                                <i class="bi bi-people-fill text-info fs-1 mb-3"></i>
+                                <h3 class="text-info fw-bold mb-1">XX</h3>
+                                <p class="text-muted mb-0">Max Occuoancy</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-item">
+                                <i class="bi bi-arrows-fullscreen text-warning fs-1 mb-3"></i>
+                                <h3 class="text-warning fw-bold mb-1">XX</h3>
+                                <p class="text-muted mb-0">Total Sqft</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+  
 
         <!--Villa Cards Grid-->
 @*         <div class="row row-cols-1 row-cols-2 row-cols-lg-3 g-4">
@@ -656,46 +708,7 @@
 
 
 
-<!--Statistics section-->
-<div class="row mt-5 mb-5">
-    <div class="col-12">
-        <div class="card shadow-lg border-0 stats-card">
-            <div class="card-body p-4">
-                <h3 class="text-center mb-4 fw-bold">At a Glance</h3>
-                <div class="row text-center g-4">
-                    <div class="col-md-3">
-                        <div class="stat-item">
-                            <i class="bi text-primary fs-1 mb-3"></i>
-                            <h3 class="text-primary fw-bold mb-1">XX</h3>
-                            <p class="text-muted mb-0">Total Villas</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="stat-item">
-                            <i class="bi bi-cash-coin text-success fs-1 mb-3"></i>
-                            <h3 class="text-success fw-bold mb-1">$$$</h3>
-                            <p class="text-muted mb-0">Starting From</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="stat-item">
-                            <i class="bi bi-people-fill text-info fs-1 mb-3"></i>
-                            <h3 class="text-info fw-bold mb-1">XX</h3>
-                            <p class="text-muted mb-0">Max Occuoancy</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="stat-item">
-                            <i class="bi bi-arrows-fullscreen text-warning fs-1 mb-3"></i>
-                            <h3 class="text-warning fw-bold mb-1">XX</h3>
-                            <p class="text-muted mb-0">Total Sqft</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!--Custom style-->
 <style>
